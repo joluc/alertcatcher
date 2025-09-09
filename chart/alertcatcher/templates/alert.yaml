@@ -1,0 +1,21 @@
+{{- if .Values.enableAlertmanagerConfig }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: alertcatcher
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: alertcatcher
+spec:
+  groups:
+  - name: AlertCatcher
+    rules:
+    - alert: AlertCatcher
+      expr: |
+        vector(1)
+      labels:
+        responsible: alertcatcher
+      annotations:
+        description: 'Test Alert for alertcatcher'
+        summary: 'Test Alert for alertcatcher'
+{{- end }}
